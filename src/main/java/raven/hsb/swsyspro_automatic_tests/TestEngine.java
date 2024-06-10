@@ -6,18 +6,18 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class TestEngine  {
 
-    private final List<TestCase> testCases = List.of(
-
-    );
+    private final List<TestCase> testCases;
 
     public GesamtErgenis execute(String controlToken) throws NoSuchAlgorithmException {
         List<Testergebnis> results = testCases.stream()
-            .map(TestCase::execute)
+            .map(test -> new Testergebnis(test.isCorrect(), test.getName()))
             .toList();
         long bestandeneTests = results.stream()
             .filter(Testergebnis::isBestanden)
@@ -34,6 +34,7 @@ public class TestEngine  {
             .bestandeneTests(bestandeneTests)
             .controlToken(controlToken)
             .hashedControlToken(encoded)
+            .details(results)
             .timestamp(time)
             .build();
     }

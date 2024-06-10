@@ -2,7 +2,7 @@ package raven.hsb.swsyspro_automatic_tests;
 
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.Collection;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,4 +14,5 @@ public class GesamtErgenis {
     private final LocalDateTime timestamp;
     private final String controlToken;
     private final String hashedControlToken;
+    private final Collection<Testergebnis> details;
 }
